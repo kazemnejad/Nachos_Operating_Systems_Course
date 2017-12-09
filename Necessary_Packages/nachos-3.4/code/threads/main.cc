@@ -46,6 +46,9 @@
 // All rights reserved.  See copyright.h for copyright notice and limitation 
 // of liability and disclaimer of warranty provisions.
 
+#include <string>
+#include <iostream>
+
 #define MAIN
 #include "copyright.h"
 #undef MAIN
@@ -58,6 +61,23 @@ extern int testnum;
 #endif
 
 // External functions used by this file
+
+std::string getCmdOption(int argc, char* argv[], const std::string& option)
+{
+    std::string cmd;
+    for( int i = 0; i < argc; ++i)
+    {
+        std::string arg = argv[i];
+
+        if(0 == arg.find(option))
+        {
+            std::size_t found = arg.find("=");
+            cmd =arg.substr(found+1, arg.size() -1 - found);
+            return cmd;
+        }
+    }
+    return cmd;
+}
 
 extern void ThreadTest(void), Copy(char *unixFile, char *nachosFile);
 extern void Print(char *file), PerformanceTest(void);
