@@ -28,9 +28,9 @@
 //----------------------------------------------------------------------
 
 Scheduler::Scheduler()
-{ 
-    readyList = new List; 
-} 
+{
+
+}
 
 //----------------------------------------------------------------------
 // Scheduler::~Scheduler
@@ -38,9 +38,9 @@ Scheduler::Scheduler()
 //----------------------------------------------------------------------
 
 Scheduler::~Scheduler()
-{ 
-    delete readyList; 
-} 
+{
+
+}
 
 //----------------------------------------------------------------------
 // Scheduler::ReadyToRun
@@ -50,28 +50,28 @@ Scheduler::~Scheduler()
 //	"thread" is the thread to be put on the ready list.
 //----------------------------------------------------------------------
 
-void
-Scheduler::ReadyToRun (Thread *thread)
-{
-    DEBUG('t', "Putting thread %s on ready list.\n", thread->getName());
-
-    thread->setStatus(READY);
-    readyList->Append((void *)thread);
-}
-
-//----------------------------------------------------------------------
-// Scheduler::FindNextToRun
-// 	Return the next thread to be scheduled onto the CPU.
-//	If there are no ready threads, return NULL.
-// Side effect:
-//	Thread is removed from the ready list.
-//----------------------------------------------------------------------
-
-Thread *
-Scheduler::FindNextToRun ()
-{
-    return (Thread *)readyList->Remove();
-}
+//void
+//Scheduler::ReadyToRun (Thread *thread)
+//{
+//    DEBUG('t', "Putting thread %s on ready list.\n", thread->getName());
+//
+//    thread->setStatus(READY);
+//    readyList->Append((void *)thread);
+//}
+//
+////----------------------------------------------------------------------
+//// Scheduler::FindNextToRun
+//// 	Return the next thread to be scheduled onto the CPU.
+////	If there are no ready threads, return NULL.
+//// Side effect:
+////	Thread is removed from the ready list.
+////----------------------------------------------------------------------
+//
+//Thread *
+//Scheduler::FindNextToRun ()
+//{
+//    return (Thread *)readyList->Remove();
+//}
 
 //----------------------------------------------------------------------
 // Scheduler::Run
