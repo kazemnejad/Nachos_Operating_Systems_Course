@@ -35,15 +35,11 @@
 /Necessary_Packages/nachos-3.4/code/bin/coff2noff
 Necessary_Packages/nachos-3\.4/code/\.settings/
 
-Necessary_Packages/nachos-3\.4/code/userprog/Makefile
-
 Necessary_Packages/nachos-3\.4/code/\.cproject
 
 Necessary_Packages/nachos-3\.4/code/\.project
 
 \.project
-
-Necessary_Packages/nachos-3\.4/code/vm/Makefile
 
 Necessary_Packages/nachos-3\.4/code/vm/swtch\.s
 
