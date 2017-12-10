@@ -17,7 +17,7 @@
 #include "timer.h"
 
 // Initialization and cleanup routines
-extern void Initialize(int argc, char **argv); 	// Initialization,
+extern void Initialize(int argc, char **argv, const char* schedulerName); 	// Initialization,
 						// called before anything else
 extern void Cleanup();				// Cleanup, called when
 						// Nachos is done.

@@ -8,8 +8,7 @@
 #include "rrscheduler.h"
 
 RoundRobinScheduler::RoundRobinScheduler() {
-	// TODO Auto-generated constructor stub
-
+	printf("rr\n");
 }
 
 RoundRobinScheduler::~RoundRobinScheduler() {

@@ -47,7 +47,6 @@
 // of liability and disclaimer of warranty provisions.
 
 #include <string>
-#include <iostream>
 
 #define MAIN
 #include "copyright.h"
@@ -60,7 +59,12 @@
 extern int testnum;
 #endif
 
-// External functions used by this file
+
+extern void ThreadTest(void), Copy(char *unixFile, char *nachosFile);
+extern void Print(char *file), PerformanceTest(void);
+extern void StartProcess(char *file), ConsoleTest(char *in, char *out);
+extern void MailTest(int networkID);
+
 
 std::string getCmdOption(int argc, char* argv[], const std::string& option)
 {
@@ -78,11 +82,6 @@ std::string getCmdOption(int argc, char* argv[], const std::string& option)
     }
     return cmd;
 }
-
-extern void ThreadTest(void), Copy(char *unixFile, char *nachosFile);
-extern void Print(char *file), PerformanceTest(void);
-extern void StartProcess(char *file), ConsoleTest(char *in, char *out);
-extern void MailTest(int networkID);
 
 //----------------------------------------------------------------------
 // main
@@ -104,8 +103,10 @@ main(int argc, char **argv)
     int argCount;			// the number of arguments 
 					// for a particular command
 
+    std::string schedulerName = getCmdOption(argc, argv, "--scheduler=");
+
     DEBUG('t', "Entering main");
-    (void) Initialize(argc, argv);
+    (void) Initialize(argc, argv, schedulerName.c_str());
     
 #ifdef THREADS
     for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {

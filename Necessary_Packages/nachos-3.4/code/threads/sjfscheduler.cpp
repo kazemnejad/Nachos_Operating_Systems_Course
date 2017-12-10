@@ -8,8 +8,7 @@
 #include "sjfscheduler.h"
 
 SjfScheduler::SjfScheduler() {
-	// TODO Auto-generated constructor stub
-
+	printf("sjf\n");
 }
 
 SjfScheduler::~SjfScheduler() {

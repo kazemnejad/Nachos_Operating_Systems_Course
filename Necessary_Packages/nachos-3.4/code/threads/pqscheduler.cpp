@@ -9,7 +9,7 @@
 
 PriorityQueueScheduler::PriorityQueueScheduler() {
 	// TODO Auto-generated constructor stub
-
+	printf("pq\n");
 }
 
 PriorityQueueScheduler::~PriorityQueueScheduler() {

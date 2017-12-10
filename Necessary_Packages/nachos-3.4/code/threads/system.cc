@@ -9,6 +9,9 @@
 #include "system.h"
 
 #include "pqscheduler.h"
+#include "mlscheduler.h"
+#include "rrscheduler.h"
+#include "sjfscheduler.h"
 
 // This defines *all* of the global data structures used by Nachos.
 // These are all initialized and de-allocated by this file.
@@ -66,6 +69,10 @@ TimerInterruptHandler(int dummy)
 	interrupt->YieldOnReturn();
 }
 
+// External functions used by this file
+
+
+
 //----------------------------------------------------------------------
 // Initialize
 // 	Initialize Nachos global data structures.  Interpret command
@@ -77,7 +84,7 @@ TimerInterruptHandler(int dummy)
 //		ex: "nachos -d +" -> argv = {"nachos", "-d", "+"}
 //----------------------------------------------------------------------
 void
-Initialize(int argc, char **argv)
+Initialize(int argc, char **argv, const char* schedulerName)
 {
     int argCount;
     char* debugArgs = "";
@@ -134,7 +141,19 @@ Initialize(int argc, char **argv)
     DebugInit(debugArgs);			// initialize DEBUG messages
     stats = new Statistics();			// collect statistics
     interrupt = new Interrupt;			// start up interrupt handling
-    scheduler = new PriorityQueueScheduler();		// initialize the ready queue
+
+    if (!strcmp(schedulerName, "pq"))
+    	scheduler = new PriorityQueueScheduler();		// initialize the ready queue
+    else if (!strcmp(schedulerName, "sjf"))
+    	scheduler = new SjfScheduler();
+    else if (!strcmp(schedulerName, "ml"))
+    	scheduler = new MultiLevelScheduler();
+    else if (!strcmp(schedulerName, "rr"))
+    	scheduler = new RoundRobinScheduler();
+    else
+    	scheduler = new PriorityQueueScheduler();
+
+
     if (randomYield)				// start the timer (if needed)
 	timer = new Timer(TimerInterruptHandler, 0, randomYield);
 

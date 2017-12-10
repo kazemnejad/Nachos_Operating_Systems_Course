@@ -8,8 +8,7 @@
 #include "mlscheduler.h"
 
 MultiLevelScheduler::MultiLevelScheduler() {
-	// TODO Auto-generated constructor stub
-
+	printf("ml\n");
 }
 
 MultiLevelScheduler::~MultiLevelScheduler() {
