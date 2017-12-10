@@ -16,12 +16,11 @@ using namespace std;
  * ---------------------------------------------------------------------------------------------------
  */
 
-
 /*
  * enqueue an item tu the PQ as the last element
  * final: do one "ShiftLeft"
  */
-void PriorityQueue::enqueue(int item) {
+void PriorityQueue::enqueue(node item) {
     pq.push_back(item);
     shiftLeft(0, pq.size() - 1);
 }
@@ -31,10 +30,10 @@ void PriorityQueue::enqueue(int item) {
  * then return the last element
  * final: do one "ShiftRight"
  */
-int PriorityQueue::dequeue() {
+node PriorityQueue::dequeue() {
     assert(!pq.empty());
     int last = pq.size() - 1;
-    int tmp = pq[0];
+    node tmp = pq[0];
     pq[0] = pq[last];
     pq[last] = tmp;
     pq.pop_back();
@@ -46,7 +45,7 @@ int PriorityQueue::dequeue() {
 void PriorityQueue::print() {
     int size = pq.size();
     for (int i = 0; i < size; ++i)
-        cout << pq[i] << "   ";
+        cout << pq[i].thread->getName() << "::"<< pq[i].priority << "   ";
     cout << endl;
 }
 
@@ -56,8 +55,8 @@ void PriorityQueue::shiftLeft(int low, int high) {
     while (child > low) {
         int parentIdx = (child - 1) / 2;
         // if child is bigger than parent we need to swap
-        if (pq[child] > pq[parentIdx]) {
-            int tmp = pq[child];
+        if (pq[child].priority > pq[parentIdx].priority) {
+            node tmp = pq[child];
             pq[child] = pq[parentIdx];
             pq[parentIdx] = tmp;
             // Make parent index the child and shift towards left
@@ -77,18 +76,18 @@ void PriorityQueue::shiftRight(int low, int high) {
         int swap = root;
 
         // Check if root is less than left child
-        if (pq[swap] < pq[leftChild]) {
+        if (pq[swap].priority < pq[leftChild].priority) {
             swap = leftChild;
         }
 
         // If right child exists check if it is less than current root
-        if ((rightChild <= high) && (pq[swap] < pq[rightChild])) {
+        if ((rightChild <= high) && (pq[swap].priority < pq[rightChild].priority)) {
             swap = rightChild;
         }
 
         // Make the biggest element of root, left and right child the root
         if (swap != root) {
-            int tmp = pq[root];
+            node tmp = pq[root];
             pq[root] = pq[swap];
             pq[swap] = tmp;
             /*
@@ -115,7 +114,7 @@ void PriorityQueue::buildHeap() {
     }
 }
 
-int PriorityQueue::front() {
+node PriorityQueue::front() {
     return pq[0];
 }
 

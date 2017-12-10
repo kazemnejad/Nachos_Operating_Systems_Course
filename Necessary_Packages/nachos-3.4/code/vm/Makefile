@@ -339,7 +339,11 @@ priorityQueue.o: ../threads/priorityQueue.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/6/bits/basic_ios.tcc \
  /usr/include/c++/6/bits/ostream.tcc /usr/include/c++/6/istream \
  /usr/include/c++/6/bits/istream.tcc /usr/include/c++/6/cassert \
- /usr/include/assert.h
+ /usr/include/assert.h ../threads/thread.h ../threads/copyright.h \
+ ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
+ ../threads/copyright.h /usr/include/string.h ../machine/machine.h \
+ ../threads/utility.h ../machine/translate.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h
 synch.o: ../threads/synch.cc /usr/include/stdc-predef.h \
  ../threads/copyright.h ../threads/synch.h ../threads/thread.h \
  ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \

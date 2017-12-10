@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <cassert>
+#include "thread.h"
 
 using namespace std;
 
@@ -13,8 +14,13 @@ using namespace std;
  * doing scheduling based on priority.
  */
 
+struct node {
+	Thread* thread;
+	int priority;
+};
+
 class PriorityQueue {
-    vector<int> pq;
+    vector<node> pq;
 
     void shiftRight(int low, int high);
 
@@ -25,19 +31,19 @@ class PriorityQueue {
 public:
     PriorityQueue() {}
 
-    PriorityQueue(vector<int> &items) {
+    PriorityQueue(vector<node> &items) {
         pq = items;
         buildHeap();
     }
 
     // Insert a new item into the priority queue
-    void enqueue(int item);
+    void enqueue(node item);
 
     // Get the maximum element from the priority queue
-    int dequeue();
+    node dequeue();
 
     // just show the top of PQ
-    int front();
+    node front();
 
     // return True if PQ is empty
     bool empty();
