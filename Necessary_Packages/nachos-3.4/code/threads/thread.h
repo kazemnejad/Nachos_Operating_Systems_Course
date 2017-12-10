@@ -102,6 +102,9 @@ class Thread {
     char* getName() { return (name); }
     void Print() { printf("%s, ", name); }
 
+    void setPriority (int p) { this->priority = p; }
+    int getPriority() { return this->priority; }
+
   private:
     // some of the private data for this class is listed above
     
@@ -128,6 +131,7 @@ class Thread {
 
     AddrSpace *space;			// User code this thread is running.
 #endif
+    int priority = 0;
 };
 
 // Magical machine-dependent routines, defined in switch.s
