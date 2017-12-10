@@ -8,7 +8,7 @@
 #include "mlscheduler.h"
 
 MultiLevelScheduler::MultiLevelScheduler() {
-	printf("ml\n");
+	printf("scheduler: ml\n");
 }
 
 MultiLevelScheduler::~MultiLevelScheduler() {
