@@ -100,8 +100,11 @@ AddrSpace::AddrSpace(OpenFile *executable)
     
 // zero out the entire address space, to zero the unitialized data segment 
 // and the stack segment
-    bzero(machine->mainMemory, size);
-
+//    bzero(machine->mainMemory, size);
+    for (int i = 0; i < size; i++)
+    {
+    	machine->mainMemory[i] = '\0';
+    }
 // then, copy in the code and data segments into memory
     if (noffH.code.size > 0) {
         DEBUG('a', "Initializing code segment, at 0x%x, size %d\n", 

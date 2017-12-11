@@ -37,6 +37,8 @@
 #ifndef THREAD_H
 #define THREAD_H
 
+#include <iostream>
+
 #include "copyright.h"
 #include "utility.h"
 
@@ -100,7 +102,10 @@ class Thread {
 						// overflowed its stack
     void setStatus(ThreadStatus st) { status = st; }
     char* getName() { return (name); }
-    void Print() { printf("%s, ", name); }
+    void Print() { std::cout << name << ", "; }
+
+    void setPriority (int p) { this->priority = p; }
+    int getPriority() { return this->priority; }
 
   private:
     // some of the private data for this class is listed above
@@ -128,6 +133,7 @@ class Thread {
 
     AddrSpace *space;			// User code this thread is running.
 #endif
+    int priority = 0;
 };
 
 // Magical machine-dependent routines, defined in switch.s

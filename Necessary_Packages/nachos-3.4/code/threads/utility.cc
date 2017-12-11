@@ -9,6 +9,8 @@
 #include "copyright.h"
 #include "utility.h"
 
+#include <iostream>
+
 // this seems to be dependent on how the compiler is configured.
 // if you have problems with va_start, try both of these alternatives
 #ifdef HOST_SNAKE
@@ -21,7 +23,7 @@
 #endif
 #endif
 
-static char *enableFlags = NULL; // controls which DEBUG messages are printed 
+static char *enableFlags = nullptr; // controls which DEBUG messages are printed
 
 //----------------------------------------------------------------------
 // DebugInit
@@ -48,10 +50,10 @@ DebugInit(char *flagList)
 bool
 DebugIsEnabled(char flag)
 {
-    if (enableFlags != NULL)
-       return (strchr(enableFlags, flag) != 0) 
-		|| (strchr(enableFlags, '+') != 0);
-    else
+//    if (enableFlags != nullptr)
+//       return (strchr(enableFlags, flag) != 0)
+//		|| (strchr(enableFlags, '+') != 0);
+//    else
       return FALSE;
 }
 
@@ -64,12 +66,14 @@ DebugIsEnabled(char flag)
 void 
 DEBUG(char flag, char *format, ...)
 {
-    if (DebugIsEnabled(flag)) {
-	va_list ap;
-	// You will get an unused variable message here -- ignore it.
-	va_start(ap, format);
-	vfprintf(stdout, format, ap);
-	va_end(ap);
-	fflush(stdout);
-    }
+//    if (DebugIsEnabled(flag)) {
+//	va_list ap;
+//	// You will get an unused variable message here -- ignore it.
+//	va_start(ap, format);
+//	vfprintf(stdout, format, ap);
+//	va_end(ap);
+//	fflush(stdout);
+//    }
+	if (DebugIsEnabled(flag))
+		std::cout << "DEBUG-TEST" << std::endl;
 }

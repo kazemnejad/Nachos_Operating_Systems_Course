@@ -47,6 +47,7 @@
 // of liability and disclaimer of warranty provisions.
 
 #include <string>
+#include <iostream>
 
 #define MAIN
 #include "copyright.h"
@@ -108,12 +109,14 @@ main(int argc, char **argv)
     DEBUG('t', "Entering main");
     (void) Initialize(argc, argv, schedulerName.c_str());
     
+    std::string arg = "";
+
 #ifdef THREADS
     for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {
       argCount = 1;
       switch (argv[0][1]) {
       case 'q':
-        testnum = atoi(argv[1]);
+        testnum = std::stoi(argv[1]);
         argCount++;
         break;
       default:
@@ -127,14 +130,15 @@ main(int argc, char **argv)
 
     for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {
 	argCount = 1;
-        if (!strcmp(*argv, "-z"))               // print copyright
-            printf (copyright);
+	arg = *argv;
+        if (arg == "-z")               // print copyright
+            std::cout << copyright;
 #ifdef USER_PROGRAM
-        if (!strcmp(*argv, "-x")) {        	// run a user program
+        if (arg ==  "-x") {        	// run a user program
 	    ASSERT(argc > 1);
             StartProcess(*(argv + 1));
             argCount = 2;
-        } else if (!strcmp(*argv, "-c")) {      // test the console
+        } else if (arg == "-c") {      // test the console
 	    if (argc == 1)
 	        ConsoleTest(NULL, NULL);
 	    else {
@@ -148,28 +152,28 @@ main(int argc, char **argv)
 	}
 #endif // USER_PROGRAM
 #ifdef FILESYS
-	if (!strcmp(*argv, "-cp")) { 		// copy from UNIX to Nachos
+	if (arg == "-cp") { 		// copy from UNIX to Nachos
 	    ASSERT(argc > 2);
 	    Copy(*(argv + 1), *(argv + 2));
 	    argCount = 3;
-	} else if (!strcmp(*argv, "-p")) {	// print a Nachos file
+	} else if (arg ==  "-p") {	// print a Nachos file
 	    ASSERT(argc > 1);
 	    Print(*(argv + 1));
 	    argCount = 2;
-	} else if (!strcmp(*argv, "-r")) {	// remove Nachos file
+	} else if (arg == "-r") {	// remove Nachos file
 	    ASSERT(argc > 1);
 	    fileSystem->Remove(*(argv + 1));
 	    argCount = 2;
-	} else if (!strcmp(*argv, "-l")) {	// list Nachos directory
+	} else if (arg == "-l") {	// list Nachos directory
             fileSystem->List();
-	} else if (!strcmp(*argv, "-D")) {	// print entire filesystem
+	} else if (arg == "-D") {	// print entire filesystem
             fileSystem->Print();
-	} else if (!strcmp(*argv, "-t")) {	// performance test
+	} else if (arg ==  "-t") {	// performance test
             PerformanceTest();
 	}
 #endif // FILESYS
 #ifdef NETWORK
-        if (!strcmp(*argv, "-o")) {
+        if (arg == "-o") {
 	    ASSERT(argc > 1);
             Delay(2); 				// delay for 2 seconds
 						// to give the user time to 

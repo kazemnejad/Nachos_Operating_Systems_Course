@@ -10,6 +10,8 @@
 #include "copyright.h"
 #include "utility.h"
 #include "stats.h"
+#include <iostream>
+using namespace std;
 
 //----------------------------------------------------------------------
 // Statistics::Statistics

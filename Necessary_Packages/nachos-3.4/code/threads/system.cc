@@ -8,6 +8,8 @@
 #include "copyright.h"
 #include "system.h"
 
+#include <string>
+
 #include "pqscheduler.h"
 #include "mlscheduler.h"
 #include "rrscheduler.h"
@@ -103,36 +105,37 @@ Initialize(int argc, char **argv, const char* schedulerName)
     
     for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {
 	argCount = 1;
-	if (!strcmp(*argv, "-d")) {
+	std::string arg = "";
+	if (arg ==  "-d") {
 	    if (argc == 1)
 		debugArgs = "+";	// turn on all debug flags
 	    else {
 	    	debugArgs = *(argv + 1);
 	    	argCount = 2;
 	    }
-	} else if (!strcmp(*argv, "-rs")) {
+	} else if (arg ==  "-rs") {
 	    ASSERT(argc > 1);
-	    RandomInit(atoi(*(argv + 1)));	// initialize pseudo-random
+	    RandomInit(std::stoi(*(argv + 1)));	// initialize pseudo-random
 						// number generator
 	    randomYield = TRUE;
 	    argCount = 2;
 	}
 #ifdef USER_PROGRAM
-	if (!strcmp(*argv, "-s"))
+	if (arg ==  "-s")
 	    debugUserProg = TRUE;
 #endif
 #ifdef FILESYS_NEEDED
-	if (!strcmp(*argv, "-f"))
+	if (arg ==  "-f")
 	    format = TRUE;
 #endif
 #ifdef NETWORK
-	if (!strcmp(*argv, "-l")) {
+	if (arg ==  "-l") {
 	    ASSERT(argc > 1);
-	    rely = atof(*(argv + 1));
+	    rely = std::stof(*(argv + 1));
 	    argCount = 2;
-	} else if (!strcmp(*argv, "-m")) {
+	} else if (arg ==  "-m") {
 	    ASSERT(argc > 1);
-	    netname = atoi(*(argv + 1));
+	    netname = std::stoi(*(argv + 1));
 	    argCount = 2;
 	}
 #endif
@@ -142,13 +145,14 @@ Initialize(int argc, char **argv, const char* schedulerName)
     stats = new Statistics();			// collect statistics
     interrupt = new Interrupt;			// start up interrupt handling
 
-    if (!strcmp(schedulerName, "pq"))
+    std::string name = schedulerName;
+    if (name == "pq")
     	scheduler = new PriorityQueueScheduler();		// initialize the ready queue
-    else if (!strcmp(schedulerName, "sjf"))
+    else if (name == "sjf")
     	scheduler = new SjfScheduler();
-    else if (!strcmp(schedulerName, "ml"))
+    else if (name == "ml")
     	scheduler = new MultiLevelScheduler();
-    else if (!strcmp(schedulerName, "rr"))
+    else if (name == "rr")
     	scheduler = new RoundRobinScheduler();
     else
     	scheduler = new PriorityQueueScheduler();

@@ -72,14 +72,10 @@ extern void DEBUG (char flag, char* format, ...);  	// Print debug message
 //
 //	NOTE: needs to be a #define, to be able to print the location 
 //	where the error occurred.
+
+#include <iostream>
 //----------------------------------------------------------------------
-#define ASSERT(condition)                                                     \
-    if (!(condition)) {                                                       \
-        fprintf(stderr, "Assertion failed: line %d, file \"%s\"\n",           \
-                __LINE__, __FILE__);                                          \
-	fflush(stderr);							      \
-        Abort();                                                              \
-    }
+#define ASSERT(condition) if (!(condition)) {std::cerr << "Assertion failed: line %d, file \"%s\"\n"; }
 
 
 #endif
