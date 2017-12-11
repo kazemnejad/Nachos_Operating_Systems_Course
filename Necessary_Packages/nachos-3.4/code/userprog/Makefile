@@ -522,15 +522,87 @@ sjfscheduler.o: ../threads/sjfscheduler.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/5/bits/stl_uninitialized.h \
  /usr/include/c++/5/bits/stl_vector.h \
  /usr/include/c++/5/bits/stl_bvector.h /usr/include/c++/5/bits/vector.tcc \
- /usr/include/c++/5/unordered_map /usr/include/c++/5/utility \
- /usr/include/c++/5/bits/stl_relops.h /usr/include/c++/5/tuple \
- /usr/include/c++/5/array /usr/include/c++/5/bits/uses_allocator.h \
+ /usr/include/c++/5/backward/hash_map \
+ /usr/include/c++/5/backward/backward_warning.h \
+ /usr/include/c++/5/backward/hashtable.h /usr/include/c++/5/iterator \
+ /usr/include/c++/5/bits/stream_iterator.h /usr/include/c++/5/algorithm \
+ /usr/include/c++/5/utility /usr/include/c++/5/bits/stl_relops.h \
+ /usr/include/c++/5/bits/stl_algo.h \
+ /usr/include/c++/5/bits/algorithmfwd.h \
+ /usr/include/c++/5/bits/stl_heap.h /usr/include/c++/5/bits/stl_tempbuf.h \
+ /usr/include/c++/5/random /usr/include/c++/5/cmath /usr/include/math.h \
+ /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
+ /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
+ /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
+ /usr/include/bits/mathcalls.h /usr/include/c++/5/limits \
+ /usr/include/c++/5/bits/random.h \
+ /usr/include/c++/5/bits/uniform_int_dist.h \
+ /usr/include/x86_64-linux-gnu/c++/5/32/bits/opt_random.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/x86intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/ia32intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/mm_malloc.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/pmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/tmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/ammintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/smmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/popcntintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/wmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/immintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512fintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512erintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512pfintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512cdintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512bwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512dqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vlbwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vldqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512ifmaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512ifmavlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vbmiintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vbmivlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/shaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/lzcntintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/bmiintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/bmi2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/fmaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/f16cintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/rtmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xtestintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/mm3dnow.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/prfchwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/fma4intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xopintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/lwpintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/tbmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/rdseedintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/fxsrintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xsaveintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xsaveoptintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/adxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/clwbintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/pcommitintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/clflushoptintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xsavesintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xsavecintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/mwaitxintrin.h \
+ /usr/include/c++/5/bits/random.tcc /usr/include/c++/5/numeric \
+ /usr/include/c++/5/bits/stl_numeric.h \
+ /usr/include/c++/5/backward/hash_fun.h /usr/include/c++/5/unordered_map \
+ /usr/include/c++/5/tuple /usr/include/c++/5/array \
+ /usr/include/c++/5/bits/uses_allocator.h \
  /usr/include/c++/5/ext/aligned_buffer.h \
  /usr/include/c++/5/bits/hashtable.h \
  /usr/include/c++/5/bits/hashtable_policy.h \
  /usr/include/c++/5/bits/unordered_map.h /usr/include/c++/5/chrono \
- /usr/include/c++/5/ratio /usr/include/c++/5/limits \
- /usr/include/c++/5/ctime /usr/include/c++/5/bits/parse_numbers.h
+ /usr/include/c++/5/ratio /usr/include/c++/5/ctime \
+ /usr/include/c++/5/bits/parse_numbers.h
 mlscheduler.o: ../threads/mlscheduler.cpp /usr/include/stdc-predef.h \
  ../threads/mlscheduler.h ../threads/scheduler.h ../threads/copyright.h \
  ../threads/list.h ../threads/utility.h ../threads/bool.h \
@@ -1128,7 +1200,79 @@ system.o: ../threads/system.cc /usr/include/stdc-predef.h \
  /usr/include/c++/5/bits/stl_bvector.h /usr/include/c++/5/bits/vector.tcc \
  /usr/include/c++/5/cassert /usr/include/assert.h \
  ../threads/mlscheduler.h ../threads/rrscheduler.h \
- ../threads/sjfscheduler.h
+ ../threads/sjfscheduler.h /usr/include/c++/5/backward/hash_map \
+ /usr/include/c++/5/backward/backward_warning.h \
+ /usr/include/c++/5/backward/hashtable.h /usr/include/c++/5/iterator \
+ /usr/include/c++/5/bits/stream_iterator.h /usr/include/c++/5/algorithm \
+ /usr/include/c++/5/utility /usr/include/c++/5/bits/stl_relops.h \
+ /usr/include/c++/5/bits/stl_algo.h \
+ /usr/include/c++/5/bits/algorithmfwd.h \
+ /usr/include/c++/5/bits/stl_heap.h /usr/include/c++/5/bits/stl_tempbuf.h \
+ /usr/include/c++/5/random /usr/include/c++/5/cmath /usr/include/math.h \
+ /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
+ /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
+ /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
+ /usr/include/bits/mathcalls.h /usr/include/c++/5/limits \
+ /usr/include/c++/5/bits/random.h \
+ /usr/include/c++/5/bits/uniform_int_dist.h \
+ /usr/include/x86_64-linux-gnu/c++/5/32/bits/opt_random.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/x86intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/ia32intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/mm_malloc.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/pmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/tmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/ammintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/smmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/popcntintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/wmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/immintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512fintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512erintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512pfintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512cdintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512bwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512dqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vlbwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vldqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512ifmaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512ifmavlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vbmiintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/avx512vbmivlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/shaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/lzcntintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/bmiintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/bmi2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/fmaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/f16cintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/rtmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xtestintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/mm3dnow.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/prfchwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/fma4intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xopintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/lwpintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/tbmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/rdseedintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/fxsrintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xsaveintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xsaveoptintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/adxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/clwbintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/pcommitintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/clflushoptintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xsavesintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/xsavecintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/mwaitxintrin.h \
+ /usr/include/c++/5/bits/random.tcc /usr/include/c++/5/numeric \
+ /usr/include/c++/5/bits/stl_numeric.h \
+ /usr/include/c++/5/backward/hash_fun.h
 thread.o: ../threads/thread.cc /usr/include/stdc-predef.h \
  ../threads/copyright.h ../threads/thread.h /usr/include/c++/5/iostream \
  /usr/include/x86_64-linux-gnu/c++/5/32/bits/c++config.h \

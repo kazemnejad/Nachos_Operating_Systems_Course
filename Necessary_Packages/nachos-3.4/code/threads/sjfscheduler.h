@@ -20,3 +20,33 @@ public:
 };
 
 #endif /* THREADS_SJFSCHEDULER_H_ */
+
+
+
+#ifndef SJF_SJF_H
+#define SJF_SJF_H
+
+#include <vector>
+#include <hash_map>
+
+struct Process {
+	int pid;
+	int bt;
+	std::vector<int> burst_times;
+};
+
+class SJF {
+public:
+	bool comparison(Process a, Process b);
+
+	void findWaitingTime(Process proc[], int n, int wt[]);
+
+	void findTurnAroundTime(Process proc[], int n, int wt[], int tat[]);
+
+	void findavgTime(Process proc[], int n);
+
+
+private:
+};
+
+#endif //SJF_SJF_H
