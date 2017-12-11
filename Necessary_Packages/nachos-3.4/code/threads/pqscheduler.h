@@ -9,13 +9,18 @@
 #define THREADS_PQSCHEDULER_H_
 
 #include "scheduler.h"
+#include "priorityQueue.h"
+
 
 class PriorityQueueScheduler : public Scheduler {
+	PriorityQueue* pq;
+
 public:
+
 	PriorityQueueScheduler();
 	virtual ~PriorityQueueScheduler();
 
-    void ReadyToRun(Thread* thread);
+    void ReadyToRun(Thread* t);
     Thread* FindNextToRun();
 };
 

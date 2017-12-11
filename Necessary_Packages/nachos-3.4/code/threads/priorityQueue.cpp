@@ -17,7 +17,7 @@ using namespace std;
  */
 
 /*
- * enqueue an item tu the PQ as the last element
+ * enqueue an item too the PQ as the last element
  * final: do one "ShiftLeft"
  */
 void PriorityQueue::enqueue(node item) {
