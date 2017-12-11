@@ -6,20 +6,26 @@
  */
 
 #include "pqscheduler.h"
+#include "priorityQueue.h"
 
 PriorityQueueScheduler::PriorityQueueScheduler() {
 	// TODO Auto-generated constructor stub
-	printf("pq\n");
+	pq = new PriorityQueue;
 }
 
 PriorityQueueScheduler::~PriorityQueueScheduler() {
 	// TODO Auto-generated destructor stub
+	delete pq;
 }
 
 Thread* PriorityQueueScheduler::FindNextToRun() {
-	return NULL;
+	node next = pq->dequeue();
+	return next.thread;
 }
 
 void PriorityQueueScheduler::ReadyToRun(Thread* t) {
-
+	node item;
+	item.thread = t;
+	item.priority = t->getPriority();
+	pq->enqueue(item);
 }
