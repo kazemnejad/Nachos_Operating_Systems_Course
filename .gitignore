@@ -52,3 +52,9 @@ Necessary_Packages/nachos-3\.4/code/test/matmult
 Necessary_Packages/nachos-3\.4/code/test/sort
 
 Necessary_Packages/nachos-3\.4/code/test/shell
+
+Necessary_Packages/nachos-3\.4/code/threads/Makefile
+
+Necessary_Packages/nachos-3\.4/code/userprog/Makefile
+
+Necessary_Packages/nachos-3\.4/code/vm/Makefile

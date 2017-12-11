@@ -107,9 +107,6 @@ class Thread {
     void setPriority (int p) { this->priority = p; }
     int getPriority() { return this->priority; }
 
-    void setPriority (int p) { this->priority = p; }
-    int getPriority() { return this->priority; }
-
   private:
     // some of the private data for this class is listed above
     
