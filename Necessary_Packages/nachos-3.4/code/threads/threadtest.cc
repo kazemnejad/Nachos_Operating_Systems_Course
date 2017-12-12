@@ -42,7 +42,7 @@ PqSimpleThread(int which)
 {
 
 	for (;;) {
-//		std::cout <<  "" << std::endl;
+		std::cout <<  "" << "";
 		currentThread->Yield();
 	}
 }

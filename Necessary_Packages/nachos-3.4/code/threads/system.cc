@@ -9,6 +9,8 @@
 #include "system.h"
 
 #include <string>
+#include <thread>
+using namespace std;
 
 #include "pqscheduler.h"
 #include "mlscheduler.h"
@@ -46,6 +48,42 @@ PostOffice *postOffice;
 // External definition, to allow us to take a pointer to this function
 extern void Cleanup();
 
+
+class later
+{
+public:
+    template <class callable, class... arguments>
+    later(int after, bool async, callable&& f, arguments&&... args)
+    {
+        std::function<typename std::result_of<callable(arguments...)>::type()> task(std::bind(std::forward<callable>(f), std::forward<arguments>(args)...));
+
+        if (async)
+        {
+            std::thread([after, task]() {
+                std::this_thread::sleep_for(std::chrono::milliseconds(after));
+                task();
+            }).detach();
+        }
+        else
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(after));
+            task();
+        }
+    }
+
+};
+
+
+void timer_thread() {
+//	for (;;) {
+//		std::cout << "ow new Thread" << std::endl;
+//	}
+
+	cout << "fucked Up so bad!!!" << endl;
+	currentThread->Yield();
+//	cout << currentThread->getPriority() << endl;
+    later later_test1(1000, true, &timer_thread);
+}
 
 //----------------------------------------------------------------------
 // TimerInterruptHandler
@@ -152,16 +190,19 @@ Initialize(int argc, char **argv, const char* schedulerName)
     	scheduler = new SjfScheduler();
     else if (name == "ml")
     	scheduler = new MultiLevelScheduler();
-    else if (name == "rr")
+    else if (name == "rr"){
     	scheduler = new RoundRobinScheduler();
-    else
+    	later later_test1(1000, true, &timer_thread);
+    }else
     	scheduler = new PriorityQueueScheduler();
 
+
+//    t = new std::thread(timer_thread);
 
     if (randomYield)				// start the timer (if needed)
 	timer = new Timer(TimerInterruptHandler, 0, randomYield);
 
-    threadToBeDestroyed = NULL;
+    threadToBeDestroyed = nullptr;
 
     // We didn't explicitly allocate the current thread we are running in.
     // But if it ever tries to give up the CPU, we better have a Thread
@@ -170,8 +211,9 @@ Initialize(int argc, char **argv, const char* schedulerName)
     currentThread->setStatus(RUNNING);
 
     interrupt->Enable();
-    CallOnUserAbort(Cleanup);			// if user hits ctl-C
+    CallOnUserAbort(Cleanup);		// if user hits ctl-C
     
+//    tt = new thread(timer_thread);
 #ifdef USER_PROGRAM
     machine = new Machine(debugUserProg);	// this must come first
 #endif
@@ -212,11 +254,13 @@ Cleanup()
 #ifdef FILESYS
     delete synchDisk;
 #endif
-    
+
     delete timer;
     delete scheduler;
     delete interrupt;
     
+//    tt->join();
+
     Exit(0);
 }
 

@@ -17,6 +17,10 @@ public:
 
 	void ReadyToRun(Thread* thread);
 	Thread* FindNextToRun();
+
+private:
+    List *readyList;  		// queue of threads that are ready to run,
+
 };
 
 #endif /* THREADS_RRSCHEDULER_H_ */

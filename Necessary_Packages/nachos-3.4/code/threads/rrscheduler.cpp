@@ -8,17 +8,18 @@
 #include "rrscheduler.h"
 
 RoundRobinScheduler::RoundRobinScheduler() {
-	printf("rr\n");
+    readyList = new List;
 }
 
 RoundRobinScheduler::~RoundRobinScheduler() {
-	// TODO Auto-generated destructor stub
+    delete readyList;
 }
 
 Thread* RoundRobinScheduler::FindNextToRun() {
-	return NULL;
+	return (Thread *)readyList->Remove();
 }
 
-void RoundRobinScheduler::ReadyToRun(Thread* t) {
-
+void RoundRobinScheduler::ReadyToRun(Thread* thread) {
+	thread->setStatus(READY);
+	readyList->Append((void *)thread);
 }
