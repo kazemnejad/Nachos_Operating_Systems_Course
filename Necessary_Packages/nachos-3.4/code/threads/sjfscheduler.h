@@ -9,6 +9,10 @@
 #define THREADS_SJFSCHEDULER_H_
 
 #include "scheduler.h"
+#include <unordered_map>
+#include <chrono>
+using namespace std;
+using namespace std::chrono;
 
 class SjfScheduler: public Scheduler {
 public:
@@ -17,36 +21,14 @@ public:
 
 	void ReadyToRun(Thread* thread);
 	Thread* FindNextToRun();
+
+private:
+    unordered_map<Thread*, long long int > burst_times;
+    time_point<std::chrono::_V2::system_clock, std::chrono::duration<long long int, std::ratio<1ll, 1000000000ll> > > now_time = std::chrono::high_resolution_clock::now();
+    long long int nanos = duration_cast<nanoseconds>(now_time.time_since_epoch()).count();
+    long long int last_time = nanos;
 };
 
 #endif /* THREADS_SJFSCHEDULER_H_ */
 
 
-
-#ifndef SJF_SJF_H
-#define SJF_SJF_H
-
-#include <vector>
-#include <hash_map>
-
-struct Process {
-	int pid;
-	int bt;
-	std::vector<int> burst_times;
-};
-
-class SJF {
-public:
-	bool comparison(Process a, Process b);
-
-	void findWaitingTime(Process proc[], int n, int wt[]);
-
-	void findTurnAroundTime(Process proc[], int n, int wt[], int tat[]);
-
-	void findavgTime(Process proc[], int n);
-
-
-private:
-};
-
-#endif //SJF_SJF_H
