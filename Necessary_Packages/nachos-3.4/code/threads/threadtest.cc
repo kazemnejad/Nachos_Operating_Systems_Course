@@ -12,6 +12,8 @@
 #include "copyright.h"
 #include "system.h"
 
+#include <iostream>
+
 // testnum is set in main.cc
 int testnum = 1;
 
@@ -35,6 +37,16 @@ SimpleThread(int which)
     }
 }
 
+void
+PqSimpleThread(int which)
+{
+
+	for (;;) {
+//		std::cout <<  "" << std::endl;
+		currentThread->Yield();
+	}
+}
+
 //----------------------------------------------------------------------
 // ThreadTest1
 // 	Set up a ping-pong between two threads, by forking a thread 
@@ -52,6 +64,18 @@ ThreadTest1()
     SimpleThread(0);
 }
 
+void PqThreadTest() {
+	for (int i = 0; i < 5; i++) {
+		Thread* t = new Thread("ft");
+		t->setPriority(i);
+		t->Fork(PqSimpleThread, i);
+	}
+
+	currentThread->setPriority(100);
+	currentThread->Yield();
+	PqSimpleThread(3);
+}
+
 //----------------------------------------------------------------------
 // ThreadTest
 // 	Invoke a test routine.
@@ -62,7 +86,7 @@ ThreadTest()
 {
     switch (testnum) {
     case 1:
-	ThreadTest1();
+	PqThreadTest();
 	break;
     default:
 	printf("No test specified.\n");
