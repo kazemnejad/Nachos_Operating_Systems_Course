@@ -22,6 +22,8 @@ public:
 	void ReadyToRun(Thread* thread);
 	Thread* FindNextToRun();
 
+	bool empty() {return burst_times.empty();}
+
 private:
     unordered_map<Thread*, long long int > burst_times;
     time_point<std::chrono::_V2::system_clock, std::chrono::duration<long long int, std::ratio<1ll, 1000000000ll> > > now_time = std::chrono::high_resolution_clock::now();

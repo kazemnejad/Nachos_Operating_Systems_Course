@@ -107,6 +107,10 @@ class Thread {
     void setPriority (int p) { this->priority = p; }
     int getPriority() { return this->priority; }
 
+    void setSchedulingType(int type) {this->schedulingType = type;}
+    int getSchedulingType() {return this->schedulingType; }
+
+
   private:
     // some of the private data for this class is listed above
     
@@ -134,6 +138,7 @@ class Thread {
     AddrSpace *space;			// User code this thread is running.
 #endif
     int priority = 0;
+    int schedulingType = 0;
 };
 
 // Magical machine-dependent routines, defined in switch.s

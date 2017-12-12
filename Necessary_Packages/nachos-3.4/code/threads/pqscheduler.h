@@ -22,6 +22,8 @@ public:
 
     void ReadyToRun(Thread* t);
     Thread* FindNextToRun();
+
+    bool empty() {return pq->empty();}
 };
 
 #endif /* THREADS_PQSCHEDULER_H_ */
