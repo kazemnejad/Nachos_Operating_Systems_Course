@@ -20,6 +20,9 @@ PriorityQueueScheduler::~PriorityQueueScheduler() {
 
 Thread* PriorityQueueScheduler::FindNextToRun() {
 	node next = pq->dequeue();
+	if (next.priority == -1 && next.thread == nullptr)
+		return nullptr;
+
 	return next.thread;
 }
 

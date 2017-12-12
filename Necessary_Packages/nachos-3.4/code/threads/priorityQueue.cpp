@@ -31,7 +31,13 @@ void PriorityQueue::enqueue(node item) {
  * final: do one "ShiftRight"
  */
 node PriorityQueue::dequeue() {
-    assert(!pq.empty());
+    if (pq.empty()) {
+    	node null;
+    	null.priority = -1;
+    	null.thread = nullptr;
+    	return null;
+    }
+
     int last = pq.size() - 1;
     node tmp = pq[0];
     pq[0] = pq[last];
