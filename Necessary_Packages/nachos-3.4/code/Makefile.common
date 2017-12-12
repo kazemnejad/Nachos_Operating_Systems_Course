@@ -31,8 +31,8 @@ CFLAGS = $(CSE120_COMMON_CFLAGS) -g -Wall -std=c++11 -pthread -Wshadow $(INCPATH
 # These definitions may change as the software is updated.
 # Some of them are also system dependent
 CPP= gcc -E
-CC = g++
-LD = g++
+CC = g++ -std=c++11 -pthread
+LD = g++ -std=c++11 -pthread
 AS = as $(CSE120_COMMON_ASFLAGS)
 
 PROGRAM = nachos
