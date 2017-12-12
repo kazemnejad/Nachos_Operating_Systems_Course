@@ -75,7 +75,7 @@ extern void DEBUG (char flag, char* format, ...);  	// Print debug message
 
 #include <iostream>
 //----------------------------------------------------------------------
-#define ASSERT(condition) if (!(condition)) {std::cerr << "Assertion failed: line %d, file \"%s\"\n"; }
+#define ASSERT(condition) if (!(condition)) {std::cerr << "Assertion failed: line" << __LINE__<< " file: "<< __FILE__ <<  "\n"; }
 
 
 #endif
