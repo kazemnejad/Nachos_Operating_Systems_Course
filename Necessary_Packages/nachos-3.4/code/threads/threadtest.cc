@@ -100,7 +100,7 @@ void SjfThreadTest() {
         t->Fork(SjfSimpleThread, i);
     }
     currentThread->Yield();
-    PqSimpleThread(5);
+//     PqSimpleThread(5);
 
 }
 
