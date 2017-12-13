@@ -15,7 +15,9 @@
 #include <iostream>
 #include <chrono>
 
-#include <iostream>
+using namespace std::chrono;
+using namespace std;
+
 
 // testnum is set in main.cc
 int testnum = 1;
@@ -40,13 +42,28 @@ SimpleThread(int which) {
 }
 
 void
-PqSimpleThread(int which)
-{
+PqSimpleThread(int which) {
 
-	for (int i = 0; i<4; i++) {
-		std::cout <<  "thread " << which << " loopedd " << i <<" times" << std::endl;
-		currentThread->Yield();
-	}
+    for (int i = 0; i < 5;i++) {
+		std::cout <<  "Thread " << which << " looped " << i+1 << std::endl;
+        currentThread->Yield();
+    }
+}
+
+void
+SjfSimpleThread(int wich) {
+    for (int i = 0; i < 5; ++i) {
+        unsigned long microseconds = wich * 10000;
+        auto now_time = std::chrono::high_resolution_clock::now();
+        auto nanos = duration_cast<nanoseconds>(now_time.time_since_epoch()).count();
+        long long int tmp = nanos;
+        usleep(microseconds);
+        now_time = std::chrono::high_resolution_clock::now();
+        nanos = duration_cast<nanoseconds>(now_time.time_since_epoch()).count();
+        cout << "sleep time:" << nanos - tmp << "ns" << endl;
+        std::cout << "Yielding thread: " << wich << std::endl;
+        currentThread->Yield();
+    }
 }
 
 //----------------------------------------------------------------------
@@ -66,15 +83,37 @@ ThreadTest1() {
 }
 
 void PqThreadTest() {
-	for (int i = 0; i < 3; i++) {
-		Thread* t = new Thread("ft");
-		t->setPriority(i);
-		t->Fork(PqSimpleThread, i);
-	}
+    for (int i = 0; i < 5; i++) {
+        Thread *t = new Thread("ft");
+        t->setPriority(i);
+        t->Fork(PqSimpleThread, i);
+    }
 
-	currentThread->setPriority(3);
-	currentThread->Yield();
-	PqSimpleThread(3);
+    currentThread->setPriority(100);
+    currentThread->Yield();
+    PqSimpleThread(3);
+}
+
+void SjfThreadTest() {
+    for (int i = 1; i < 5; i++) {
+        Thread *t = new Thread("kz");
+        t->Fork(SjfSimpleThread, i);
+    }
+    currentThread->Yield();
+    PqSimpleThread(5);
+
+}
+
+void MLQThreadTest() {
+	for (int i = 0; i < 10;i++) {
+			Thread *t = new Thread("ft");
+			        t->setPriority(i);
+			        t->setSchedulingType(i%2);
+			        if (i%2 == 0)
+			        	t->Fork(PqSimpleThread, i);
+			        else if (i%2 == 1)
+			        	t->Fork(SjfSimpleThread, i);
+		}
 }
 
 //----------------------------------------------------------------------
@@ -83,13 +122,12 @@ void PqThreadTest() {
 //----------------------------------------------------------------------
 
 void
-ThreadTest() {
-    switch (testnum) {
-    case 1:
-	PqThreadTest();
-	break;
-    default:
-	printf("No test specified.\n");
-	break;
+ThreadTest(string sn) {
+    if (sn == "pq"){
+    	PqThreadTest();
+    }else if (sn == "sjf"){
+    	SjfThreadTest();
+    }else if (sn == "ml") {
+    	MLQThreadTest();
     }
 }
