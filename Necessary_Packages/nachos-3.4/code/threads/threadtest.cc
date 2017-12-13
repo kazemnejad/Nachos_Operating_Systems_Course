@@ -15,9 +15,7 @@
 #include <iostream>
 #include <chrono>
 
-using namespace std::chrono;
-using namespace std;
-
+#include <iostream>
 
 // testnum is set in main.cc
 int testnum = 1;
@@ -42,36 +40,11 @@ SimpleThread(int which) {
 }
 
 void
-PqSimpleThread(int which) {
+PqSimpleThread(int which)
+{
 
-    for (;;) {
-//		std::cout <<  "" << std::endl;
-        currentThread->Yield();
-    }
-}
-
-void
-SjfSimpleThread(int wich) {
-    for (int i = 0; i < 5; ++i) {
-        unsigned long microseconds = wich * 10000;
-        auto now_time = std::chrono::high_resolution_clock::now();
-        auto nanos = duration_cast<nanoseconds>(now_time.time_since_epoch()).count();
-        long long int tmp = nanos;
-        usleep(microseconds);
-        now_time = std::chrono::high_resolution_clock::now();
-        nanos = duration_cast<nanoseconds>(now_time.time_since_epoch()).count();
-        cout << "sleep time:" << nanos - tmp << "ns" << endl;
-        std::cout << "Yielding thread: " << wich << std::endl;
-        currentThread->Yield();
-    }
-}
-
-void
-MLQSimpleThread(int which) {
-	int j;
-
-	for (j = 0; i < 5; j++) {
-		printf("=== thread %d is in his %d chance ===\n", which, j);
+	for (int i = 0; i<4; i++) {
+		std::cout <<  "thread " << which << " loopedd " << i <<" times" << std::endl;
 		currentThread->Yield();
 	}
 }
@@ -93,36 +66,15 @@ ThreadTest1() {
 }
 
 void PqThreadTest() {
-    for (int i = 0; i < 5; i++) {
-        Thread *t = new Thread("ft");
-        t->setPriority(i);
-        t->Fork(PqSimpleThread, i);
-    }
-
-    currentThread->setPriority(100);
-    currentThread->Yield();
-    PqSimpleThread(3);
-}
-
-void SjfThreadTest() {
-    for (int i = 1; i < 5; i++) {
-        Thread *t = new Thread("kz");
-        t->Fork(SjfSimpleThread, i);
-    }
-    currentThread->Yield();
-    PqSimpleThread(5);
-
-}
-
-void MLQThreadTest() {
-	for (int i = 0; i < 5; i++) {
-		Thread *t = new Thread("far");
+	for (int i = 0; i < 3; i++) {
+		Thread* t = new Thread("ft");
 		t->setPriority(i);
-		t->Fork(MLQSimpleThread, i);
+		t->Fork(PqSimpleThread, i);
 	}
-	currrentThread->setPriority(20);
+
+	currentThread->setPriority(3);
 	currentThread->Yield();
-	MLQSimpleThread(5);
+	PqSimpleThread(3);
 }
 
 //----------------------------------------------------------------------
@@ -133,12 +85,11 @@ void MLQThreadTest() {
 void
 ThreadTest() {
     switch (testnum) {
-        case 1:
-//            PqThreadTest();
-            SjfThreadTest();
-            break;
-        default:
-            printf("No test specified.\n");
-            break;
+    case 1:
+	PqThreadTest();
+	break;
+    default:
+	printf("No test specified.\n");
+	break;
     }
 }
