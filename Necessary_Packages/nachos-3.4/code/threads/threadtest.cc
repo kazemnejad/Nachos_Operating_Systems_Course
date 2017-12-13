@@ -66,6 +66,16 @@ SjfSimpleThread(int wich) {
     }
 }
 
+void
+MLQSimpleThread(int which) {
+	int j;
+
+	for (j = 0; i < 5; j++) {
+		printf("=== thread %d is in his %d chance ===\n", which, j);
+		currentThread->Yield();
+	}
+}
+
 //----------------------------------------------------------------------
 // ThreadTest1
 // 	Set up a ping-pong between two threads, by forking a thread 
@@ -102,6 +112,17 @@ void SjfThreadTest() {
     currentThread->Yield();
     PqSimpleThread(5);
 
+}
+
+void MLQThreadTest() {
+	for (int i = 0; i < 5; i++) {
+		Thread *t = new Thread("far");
+		t->setPriority(i);
+		t->Fork(MLQSimpleThread, i);
+	}
+	currrentThread->setPriority(20);
+	currentThread->Yield();
+	MLQSimpleThread(5);
 }
 
 //----------------------------------------------------------------------
