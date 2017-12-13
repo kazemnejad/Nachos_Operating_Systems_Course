@@ -6,8 +6,7 @@
  */
 
 #include "mlscheduler.h"
-#include "pqscheduler.h"
-#include "sjfscheduler.h"
+
 #include <iostream>
 using namespace std;
 
@@ -22,14 +21,11 @@ MultiLevelScheduler::~MultiLevelScheduler() {
 }
 
 Thread* MultiLevelScheduler::FindNextToRun() {
-	if (!q1->empty()){
-		DEBUG('t', "Now in thread \"%s\"\n from PQ in MLQ", currentThread->getName());
+	if (!q1->empty())
 		return q1->FindNextToRun();
-	}
-	else if (!q2->empty()) {
-		DEBUG('t', "Now in thread \"%s\"\n from SJF in MLQ", currentThread->getName());
+	else if (!q2->empty())
 		return q2->FindNextToRun();
-	}
+
 	return nullptr;
 }
 
