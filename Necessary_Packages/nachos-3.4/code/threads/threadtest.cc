@@ -1,5 +1,5 @@
 // threadtest.cc 
-//	Simple test case for the threads assignment.
+//	Siple test case for the threads assignment.
 //
 //	Create two threads, and have them context switch
 //	back and forth between themselves by calling Thread::Yield, 

@@ -10,11 +10,12 @@
  *	be careful to allocate a big enough stack to hold the automatics!
  */
 
-#include "syscall.h"
+//#include "syscall.h"
 
 int
 main()
 {
-    Halt();
+    //Halt();
     /* not reached */
+    //Exit(0);
 }
