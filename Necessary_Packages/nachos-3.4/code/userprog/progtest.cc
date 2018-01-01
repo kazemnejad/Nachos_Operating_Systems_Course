@@ -103,7 +103,7 @@ void StartUserProgram(char *filename)
 
     space = new AddrSpace(executable);
 
-    char* threadName = new char[200];
+    char *threadName = new char[200];
     sprintf(threadName, "%s-%d", filename, machine->GetNewPid());
 
     Thread *t = new Thread(threadName);

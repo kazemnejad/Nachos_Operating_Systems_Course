@@ -76,8 +76,6 @@ TimerInterruptHandler(int dummy)
 //----------------------------------------------------------------------
 void Initialize(int argc, char **argv)
 {
-    threadToBeDestroyed = new List();
-    
     int argCount;
     char *debugArgs = "";
     bool randomYield = FALSE;
@@ -145,7 +143,8 @@ void Initialize(int argc, char **argv)
 
     timer = new Timer(TimerInterruptHandler, 0, randomYield);
 
-    threadToBeDestroyed = NULL;
+    // threadToBeDestroyed = NULL;
+    threadToBeDestroyed = new List();
 
     // We didn't explicitly allocate the current thread we are running in.
     // But if it ever tries to give up the CPU, we better have a Thread

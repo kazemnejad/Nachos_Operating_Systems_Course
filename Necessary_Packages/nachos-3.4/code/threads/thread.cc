@@ -153,7 +153,6 @@ void Thread::Finish()
     DEBUG('t', "Finishing thread \"%s\"\n", getName());
 
     ASSERT(threadToBeDestroyed != NULL);
-    
     threadToBeDestroyed->Append((void *)currentThread);
     //threadToBeDestroyed = currentThread;
     Sleep(); // invokes SWITCH
