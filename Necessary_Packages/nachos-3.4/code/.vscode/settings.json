@@ -18,6 +18,9 @@
         "type_traits": "cpp",
         "string": "cpp",
         "string_view": "cpp",
-        "__string": "cpp"
+        "__string": "cpp",
+        "initializer_list": "cpp",
+        "list": "cpp",
+        "utility": "cpp"
     }
 }

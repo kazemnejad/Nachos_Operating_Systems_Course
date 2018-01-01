@@ -122,10 +122,19 @@ void Scheduler::Run(Thread *nextThread)
     // we need to delete its carcass.  Note we cannot delete the thread
     // before now (for example, in Thread::Finish()), because up to this
     // point, we were still running on the old thread's stack!
-    if (threadToBeDestroyed != NULL)
+
+    fprintf(stderr, "running: %s\n", currentThread->getName());
+
+    // if (threadToBeDestroyed != NULL)
+    // {
+    //     delete threadToBeDestroyed;
+    //     threadToBeDestroyed = NULL;
+    // }
+
+    while (!threadToBeDestroyed->IsEmpty())
     {
-        delete threadToBeDestroyed;
-        threadToBeDestroyed = NULL;
+        Thread *t = (Thread *)threadToBeDestroyed->Remove();
+        delete t;
     }
 
 #ifdef USER_PROGRAM

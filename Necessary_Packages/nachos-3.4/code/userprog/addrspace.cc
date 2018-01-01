@@ -103,27 +103,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
                                        // pages to be read-only
     }
 
-    // zero out the entire address space, to zero the unitialized data segment
-    // and the stack segment
-
-    // bzero(machine->mainMemory, size);
     CleanAddrspace();
-
-    // then, copy in the code and data segments into memory
-    // if (noffH.code.size > 0)
-    // {
-    //     DEBUG('a', "Initializing code segment, at 0x%x, size %d\n",
-    //           noffH.code.virtualAddr, noffH.code.size);
-    //     executable->ReadAt(&(machine->mainMemory[noffH.code.virtualAddr]), noffH.code.size, noffH.code.inFileAddr);
-    // }
-
-    // if (noffH.initData.size > 0)
-    // {
-    //     DEBUG('a', "Initializing data segment, at 0x%x, size %d\n",
-    //           noffH.initData.virtualAddr, noffH.initData.size);
-    //     executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
-    //                        noffH.initData.size, noffH.initData.inFileAddr);
-    // }
 
     CopySegmentToMemory(noffH.code, executable);
     CopySegmentToMemory(noffH.initData, executable);
@@ -151,7 +131,7 @@ void AddrSpace::CopySegmentToMemory(Segment seg, OpenFile *file)
     unsigned int offset = virtualAddr % PageSize;
 
     int physicalAddr = pageTable[vpn].physicalPage * PageSize + offset;
-    file->ReadAt(&(machine->mainMemory[physicalAddr]), seg.size % PageSize, seg.inFileAddr + i * PageSize);
+    file->ReadAt(&(machine->mainMemory[physicalAddr]), seg.size - i * PageSize, seg.inFileAddr + i * PageSize);
 }
 
 void AddrSpace::CleanAddrspace()
@@ -160,6 +140,20 @@ void AddrSpace::CleanAddrspace()
     {
         int physicalAddr = pageTable[i].physicalPage * PageSize;
         bzero(&machine->mainMemory[physicalAddr], PageSize);
+    }
+}
+
+void AddrSpace::DumpAddrSpace()
+{
+    printf("Address Space for thread %s: \n", currentThread->getName());
+    for (int i = 0; i < numPages; ++i)
+    {
+        for (int j = 0; j < PageSize; ++j)
+        {
+            int virtualAddr = pageTable[i].virtualPage * PageSize + j;
+            int addr = pageTable[i].physicalPage * PageSize + j;
+            printf("%d -> %d: %.2x\n", virtualAddr, addr, (unsigned char)machine->mainMemory[addr]);
+        }
     }
 }
 
@@ -176,7 +170,7 @@ AddrSpace::~AddrSpace()
 }
 
 //----------------------------------------------------------------------
-// AddrSpace::InitRegisters
+// AddrSpace::Iniaegisters
 // 	Set the initial values for the user-level register set.
 //
 // 	We write these directly into the "machine" registers, so
@@ -216,7 +210,6 @@ void AddrSpace::InitRegisters()
 
 void AddrSpace::SaveState()
 {
-    PrintPageTable();
 }
 
 //----------------------------------------------------------------------

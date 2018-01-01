@@ -63,8 +63,8 @@ void ExceptionHandler(ExceptionType which)
 
         case SC_Exit:
             printf("exit: %s\n", currentThread->getName());
-            machine->IncrementPCReg();
             currentThread->Finish();
+            machine->IncrementPCReg();
             break;
 
         default:

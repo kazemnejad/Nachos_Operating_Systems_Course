@@ -198,6 +198,7 @@ class Machine
 
 	void Debugger();  // invoke the user program debugger
 	void DumpState(); // print the user CPU and memory state
+	void DumpMemory();
 
 	int GetFreePhysicalPageNumber();
 	void AddFreePhysicalPageNumber(int pgNumber);
@@ -238,6 +239,7 @@ class Machine
 	unsigned int pageTableSize;
 
 	void PrintPageTable();
+	int GetNewPid();
 
   private:
 	bool singleStep;  // drop back into the debugger after each
@@ -248,6 +250,7 @@ class Machine
 	void InitFreePhysicalPages();
 
 	Stack *freePhysicalPages;
+	int lastPid = 0;
 };
 
 extern void ExceptionHandler(ExceptionType which);

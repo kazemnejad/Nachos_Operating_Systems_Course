@@ -10,12 +10,47 @@
  *	be careful to allocate a big enough stack to hold the automatics!
  */
 
-//#include "syscall.h"
+#include "syscall.h"
 
-int
-main()
+int a[10];
+
+int main()
 {
-    //Halt();
-    /* not reached */
-    //Exit(0);
+    a[1] = 6;
+    a[2] = 5;
+    a[3] = 4;
+    a[4] = 3;
+    a[5] = 2;
+    a[1] = 6;
+    a[2] = 5;
+    a[3] = 4;
+    a[4] = 3;
+    a[5] = 2;
+    a[1] = 6;
+    a[2] = 5;
+    a[3] = 4;
+    a[4] = 3;
+    a[5] = 2;
+    a[1] = 6;
+    a[2] = 5;
+    a[3] = 4;
+    a[4] = 3;
+    a[5] = 2;
+    a[1] = 6;
+    a[2] = 5;
+    a[3] = 4;
+    a[4] = 3;
+    a[5] = 2;
+    a[1] = 6;
+    a[2] = 5;
+    a[3] = 4;
+    a[4] = 3;
+    a[5] = 2;
+    a[1] = 6;
+    a[2] = 5;
+    a[3] = 4;
+    a[4] = 3;
+    a[5] = 2;
+
+    Exit(0);
 }

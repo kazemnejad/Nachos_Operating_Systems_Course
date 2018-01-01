@@ -8,16 +8,18 @@
 #include "copyright.h"
 #include "system.h"
 
+#include "list.h"
+
 // This defines *all* of the global data structures used by Nachos.
 // These are all initialized and de-allocated by this file.
 
-Thread *currentThread;       // the thread we are running now
-Thread *threadToBeDestroyed; // the thread that just finished
-Scheduler *scheduler;        // the ready list
-Interrupt *interrupt;        // interrupt status
-Statistics *stats;           // performance metrics
-Timer *timer;                // the hardware timer device,
-                             // for invoking context switches
+Thread *currentThread;     // the thread we are running now
+List *threadToBeDestroyed; // the thread that just finished
+Scheduler *scheduler;      // the ready list
+Interrupt *interrupt;      // interrupt status
+Statistics *stats;         // performance metrics
+Timer *timer;              // the hardware timer device,
+                           // for invoking context switches
 
 #ifdef FILESYS_NEEDED
 FileSystem *fileSystem;
@@ -74,6 +76,8 @@ TimerInterruptHandler(int dummy)
 //----------------------------------------------------------------------
 void Initialize(int argc, char **argv)
 {
+    threadToBeDestroyed = new List();
+    
     int argCount;
     char *debugArgs = "";
     bool randomYield = FALSE;

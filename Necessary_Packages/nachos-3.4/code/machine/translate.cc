@@ -215,7 +215,7 @@ Machine::Translate(int virtAddr, int *physAddr, int size, bool writing)
 	vpn = (unsigned)virtAddr / PageSize;
 	offset = (unsigned)virtAddr % PageSize;
 
-	printf("%d %d : %d\n", virtAddr ,vpn, offset);
+	//printf("%d %d : %d\n", virtAddr ,vpn, offset);
 
 	if (tlb == NULL)
 	{ // => page table => vpn is index into table

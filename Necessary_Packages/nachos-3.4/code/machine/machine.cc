@@ -219,7 +219,7 @@ void Machine::WriteRegister(int num, int value)
 void Machine::InitFreePhysicalPages()
 {
     for (int i = NumPhysPages - 1; i >= 0; --i)
-       freePhysicalPages->push(i);
+        freePhysicalPages->push(i);
 
     // for (int i = 0; i < NumPhysPages; ++i)
     //     freePhysicalPages->push(i);
@@ -244,4 +244,23 @@ void Machine::IncrementPCReg()
     registers[PrevPCReg] = registers[PCReg];
     registers[PCReg] = registers[NextPCReg];
     registers[NextPCReg] = pcAfter;
+}
+
+void Machine::DumpMemory()
+{
+    static int dumpTimes = 0;
+    FILE *f;
+    char fileName[20];
+    sprintf(fileName, "memory_dump_%d.hex", dumpTimes++);
+    f = fopen(fileName, "w+");
+    for (int i = 0; i < MemorySize; i++)
+    {
+        fprintf(f, "0x%.8x\n", *(int *)&mainMemory[i]);
+    }
+    fclose(f);
+}
+
+int Machine::GetNewPid()
+{
+    return lastPid++;
 }

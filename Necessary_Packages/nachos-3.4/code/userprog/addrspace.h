@@ -36,6 +36,7 @@ class AddrSpace
 	void PrintPageTable();
 	void CleanAddrspace();
 	void CopySegmentToMemory(Segment s, OpenFile* file);
+	void DumpAddrSpace();
   private:
 	void FreePhysicalMemory();
 	TranslationEntry *pageTable; // Assume linear page table translation

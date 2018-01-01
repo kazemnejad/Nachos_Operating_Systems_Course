@@ -102,7 +102,11 @@ void StartUserProgram(char *filename)
     }
 
     space = new AddrSpace(executable);
-    Thread* t = new Thread(filename);
+
+    char* threadName = new char[200];
+    sprintf(threadName, "%s-%d", filename, machine->GetNewPid());
+
+    Thread *t = new Thread(threadName);
     t->space = space;
 
     delete executable; // close file

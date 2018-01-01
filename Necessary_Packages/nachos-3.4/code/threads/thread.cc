@@ -146,13 +146,16 @@ void Thread::CheckOverflow()
 //
 void Thread::Finish()
 {
-    printf("f:%s\n", getName());
+    printf("finish: %s\n", getName());
     (void)interrupt->SetLevel(IntOff);
     ASSERT(this == currentThread);
 
     DEBUG('t', "Finishing thread \"%s\"\n", getName());
 
-    threadToBeDestroyed = currentThread;
+    ASSERT(threadToBeDestroyed != NULL);
+    
+    threadToBeDestroyed->Append((void *)currentThread);
+    //threadToBeDestroyed = currentThread;
     Sleep(); // invokes SWITCH
     // not reached
 }
