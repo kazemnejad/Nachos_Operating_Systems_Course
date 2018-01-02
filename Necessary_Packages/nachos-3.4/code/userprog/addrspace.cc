@@ -102,7 +102,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
                                        // pages to be read-only
     }
 
-    CleanAddrspace();
+    CleanAddrSpace();
 
     CopySegmentToMemory(noffH.code, executable);
     CopySegmentToMemory(noffH.initData, executable);

@@ -42,9 +42,11 @@ Thread::Thread(Thread *parent)
     char threadName[200];
     sprintf(threadName, "%s child", parent->getName());
     Init(threadName);
-    InitUserRegisters(parent->userRegisters);
 
+#ifdef USER_PROGRAM
+    InitUserRegisters(parent->userRegisters);
     parentPid = parent->GetPid();
+#endif
 }
 
 void Thread::Init(char *threadName)
@@ -55,15 +57,17 @@ void Thread::Init(char *threadName)
     status = JUST_CREATED;
 #ifdef USER_PROGRAM
     space = NULL;
-#endif
     pid = machine->GetNewPid();
+#endif
 }
 
+#ifdef USER_PROGRAM
 void Thread::InitUserRegisters(int *sourceRegisters)
 {
     for (int i = 0; i < NumTotalRegs; ++i)
         userRegisters[i] = sourceRegisters[i];
 }
+#endif
 
 //----------------------------------------------------------------------
 // Thread::~Thread

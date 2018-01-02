@@ -95,7 +95,7 @@ class Thread
     // basic thread operations
 
     Thread(Thread *parent);
-    void Init();
+    void Init(char *name);
 
     void Fork(VoidFunctionPtr func, int arg); // Make thread run (*func)(arg)
     void Yield();                             // Relinquish the CPU if any
@@ -108,7 +108,7 @@ class Thread
         // overflowed its stack
     void setStatus(ThreadStatus st) { status = st; }
     char *getName() { return (name); }
-    int GetPid() { return pid }
+    int GetPid() { return pid; }
 
     void InitUserRegisters(int *sourceRegisters);
 
@@ -134,9 +134,9 @@ class Thread
     // one for its state while executing user code, one for its state
     // while executing kernel code.
 
-    int userRegisters[NumTotalRegs]; // user-level CPU register state
-
   public:
+    // user-level CPU register state
+    int userRegisters[NumTotalRegs];
     void SaveUserState();    // save user-level register state
     void RestoreUserState(); // restore user-level register state
 
