@@ -20,6 +20,8 @@
 //	memory, and jump to it.
 //----------------------------------------------------------------------
 
+extern void DoAfterContextSwitchThings();
+
 void StartProcess(char *filename)
 {
     OpenFile *executable = fileSystem->Open(filename);
@@ -86,6 +88,8 @@ void ConsoleTest(char *in, char *out)
 
 void RunUserProgramProcess(int ignored)
 {
+    DoAfterContextSwitchThings();
+
     machine->Run();
     ASSERT(FALSE);
 }
@@ -93,7 +97,6 @@ void RunUserProgramProcess(int ignored)
 void StartUserProgram(char *filename)
 {
     OpenFile *executable = fileSystem->Open(filename);
-    AddrSpace *space;
 
     if (executable == NULL)
     {
@@ -101,18 +104,15 @@ void StartUserProgram(char *filename)
         return;
     }
 
-    space = new AddrSpace(executable);
+    AddrSpace *space = new AddrSpace(executable);
 
-    char *threadName = new char[200];
-    sprintf(threadName, "%s-%d", filename, machine->GetNewPid());
-
-    Thread *t = new Thread(threadName);
+    Thread *t = new Thread(filename);
     t->space = space;
+    t->space->InitRegisters(t->userRegisters);
+
+    printf("# pid: %d = %s\n", t->GetPid(), filename);
 
     delete executable; // close file
-
-    space->InitRegisters();
-    space->RestoreState();
 
     t->Fork(RunUserProgramProcess, 0);
 }

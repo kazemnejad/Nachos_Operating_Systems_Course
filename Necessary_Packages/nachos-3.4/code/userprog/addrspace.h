@@ -32,8 +32,10 @@ class AddrSpace
 
 	void InitRegisters(); // Initialize user-level CPU registers,
 						  // before jumping to user code
+						  // Save/restore address space-specific
+	void InitRegisters(int *registers);
 
-	void SaveState();	// Save/restore address space-specific
+	void SaveState();
 	void RestoreState(); // info on a context switch
 
 	void PrintPageTable();

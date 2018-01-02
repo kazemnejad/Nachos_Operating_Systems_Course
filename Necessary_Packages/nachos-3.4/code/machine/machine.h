@@ -240,6 +240,8 @@ class Machine
 
 	void PrintPageTable();
 	int GetNewPid();
+	void DumpState(int *registers);
+	void OverridePC(int newPc);
 
   private:
 	bool singleStep;  // drop back into the debugger after each

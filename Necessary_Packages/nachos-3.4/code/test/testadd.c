@@ -1,66 +1,46 @@
-/* halt.c
- *	Simple program to test whether running a user program works.
- *	
- *	Just do a "syscall" that shuts down the OS.
+/* sort.c 
+ *    Test program to sort a large number of integers.
  *
- * 	NOTE: for some reason, user programs with global data structures 
- *	sometimes haven't worked in the Nachos environment.  So be careful
- *	out there!  One option is to allocate data structures as 
- * 	automatics within a procedure, but if you do this, you have to
- *	be careful to allocate a big enough stack to hold the automatics!
+ *    Intention is to stress virtual memory system.
+ *
+ *    Ideally, we could read the unsorted array off of the file system,
+ *	and store the result back to the file system!
  */
 
 #include "syscall.h"
 
-int
-main()
+int A[10]; /* size of physical memory; with code, we'll run out of space!*/
+
+void an()
 {
-    int a[10];
+    int i = 10;
+    i++;
+    Exit(10);
+    return;
+}
 
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
+int main()
+{
+    int i, j, tmp;
 
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
+    /* first initialize the array, in reverse sorted order */
+    for (i = 0; i < 10; i++)
+        A[i] = 10 - i;
 
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
+    int an = Fork();
+    Exit(an);
 
-    a[0] = 0;
-    a[0] = 0;
+    // Fork(an);
 
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
-    a[0] = 0;
+    /* then sort! */
+    for (i = 0; i < 9; i++)
+        for (j = 0; j < (9 - i); j++)
+            if (A[j] > A[j + 1])
+            { /* out of order -> need to swap ! */
+                tmp = A[j];
+                A[j] = A[j + 1];
+                A[j + 1] = tmp;
+            }
 
-    a[0] = 0;
-
-    Exit(0);
+    Exit(6); /* and then we're done -- should be 0! */
 }

@@ -183,7 +183,41 @@ void Machine::DumpState()
             break;
 
         default:
-            printf("\t%d:\t0x%x%s", i, registers[i],
+            printf("\t%d:\t0x%x=%d%s", i, registers[i], registers[i],
+                   ((i % 4) == 3) ? "\n" : "");
+            break;
+        }
+
+    printf("\tHi:\t0x%x", registers[HiReg]);
+    printf("\tLo:\t0x%x\n", registers[LoReg]);
+    printf("\tPC:\t0x%x", registers[PCReg]);
+    printf("\tNextPC:\t0x%x", registers[NextPCReg]);
+    printf("\tPrevPC:\t0x%x\n", registers[PrevPCReg]);
+    printf("\tLoad:\t0x%x", registers[LoadReg]);
+    printf("\tLoadV:\t0x%x\n", registers[LoadValueReg]);
+    printf("\n");
+}
+
+void Machine::DumpState(int *registers)
+{
+    int i;
+
+    printf("Machine registers:\n");
+    for (i = 0; i < NumGPRegs; i++)
+        switch (i)
+        {
+        case StackReg:
+            printf("\tSP(%d):\t0x%x%s", i, registers[i],
+                   ((i % 4) == 3) ? "\n" : "");
+            break;
+
+        case RetAddrReg:
+            printf("\tRA(%d):\t0x%x%s", i, registers[i],
+                   ((i % 4) == 3) ? "\n" : "");
+            break;
+
+        default:
+            printf("\t%d:\t0x%x=%d%s", i, registers[i], registers[i],
                    ((i % 4) == 3) ? "\n" : "");
             break;
         }
@@ -263,4 +297,12 @@ void Machine::DumpMemory()
 int Machine::GetNewPid()
 {
     return lastPid++;
+}
+
+void Machine::OverridePC(int newPc)
+{
+    int pcAfter = newPc + 4;
+    registers[PrevPCReg] = registers[PCReg];
+    registers[PCReg] = newPc;
+    registers[NextPCReg] = pcAfter;
 }

@@ -21,6 +21,20 @@
         "__string": "cpp",
         "initializer_list": "cpp",
         "list": "cpp",
-        "utility": "cpp"
-    }
+        "utility": "cpp",
+        "typeinfo": "cpp",
+        "ios": "c",
+        "syscall.h": "c",
+        "__functional_03": "c",
+        "__mutex_base": "c",
+        "istream": "c",
+        "ostream": "c",
+        "streambuf": "c"
+    },
+    "cSpell.words": [
+        "fork",
+        "handle",
+        "khiari",
+        "syscall"
+    ]
 }

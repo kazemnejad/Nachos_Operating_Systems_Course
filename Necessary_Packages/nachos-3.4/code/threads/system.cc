@@ -149,10 +149,10 @@ void Initialize(int argc, char **argv)
     // We didn't explicitly allocate the current thread we are running in.
     // But if it ever tries to give up the CPU, we better have a Thread
     // object to save its state.
-    
+
     currentThread = new Thread("main");
     currentThread->setStatus(RUNNING);
-    
+
     interrupt->Enable();
     CallOnUserAbort(Cleanup); // if user hits ctl-C
 
@@ -201,4 +201,24 @@ void Cleanup()
     delete interrupt;
 
     Exit(0);
+}
+
+void DoAfterContextSwitchThings()
+{
+    printf("# Do After SWITCH things # in: %s\n", currentThread->getName());
+
+    while (!threadToBeDestroyed->IsEmpty())
+    {
+        Thread *t = (Thread *)threadToBeDestroyed->Remove();
+        delete t;
+    }
+
+#ifdef USER_PROGRAM
+    if (currentThread->space != NULL)
+    {                                      // if there is an address space
+        currentThread->RestoreUserState(); // to restore, do it.
+        currentThread->space->RestoreState();
+    }
+#endif
+
 }

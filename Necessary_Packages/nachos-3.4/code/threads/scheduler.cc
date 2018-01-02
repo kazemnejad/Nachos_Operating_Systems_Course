@@ -22,6 +22,7 @@
 #include "scheduler.h"
 #include "system.h"
 
+extern void DoAfterContextSwitchThings();
 //----------------------------------------------------------------------
 // Scheduler::Scheduler
 // 	Initialize the list of ready but not running threads to empty.
@@ -107,7 +108,7 @@ void Scheduler::Run(Thread *nextThread)
     DEBUG('t', "Switching from thread \"%s\" to thread \"%s\"\n",
           oldThread->getName(), nextThread->getName());
 
-    printf("switch %s -> %s\n", oldThread->getName(), nextThread->getName());
+    printf("\n# SWITCH #: %s -> %s\n", oldThread->getName(), nextThread->getName());
 
     // This is a machine-dependent assembly language routine defined
     // in switch.s.  You may have to think
@@ -123,7 +124,7 @@ void Scheduler::Run(Thread *nextThread)
     // before now (for example, in Thread::Finish()), because up to this
     // point, we were still running on the old thread's stack!
 
-    fprintf(stderr, "running: %s\n", currentThread->getName());
+    // fprintf(stderr, "running: %s\n", currentThread->getName());
 
     // if (threadToBeDestroyed != NULL)
     // {
@@ -131,19 +132,22 @@ void Scheduler::Run(Thread *nextThread)
     //     threadToBeDestroyed = NULL;
     // }
 
-    while (!threadToBeDestroyed->IsEmpty())
-    {
-        Thread *t = (Thread *)threadToBeDestroyed->Remove();
-        delete t;
-    }
+    //     while (!threadToBeDestroyed->IsEmpty())
+    //     {
+    //         Thread *t = (Thread *)threadToBeDestroyed->Remove();
+    //         delete t;
+    //     }
 
-#ifdef USER_PROGRAM
-    if (currentThread->space != NULL)
-    {                                      // if there is an address space
-        currentThread->RestoreUserState(); // to restore, do it.
-        currentThread->space->RestoreState();
-    }
-#endif
+    //     printf("skkkkkkkkkk\n");
+    // #ifdef USER_PROGRAM
+    //     if (currentThread->space != NULL)
+    //     {                                      // if there is an address space
+    //         currentThread->RestoreUserState(); // to restore, do it.
+    //         currentThread->space->RestoreState();
+    //     }
+    // #endif
+
+    DoAfterContextSwitchThings();
 }
 
 //----------------------------------------------------------------------

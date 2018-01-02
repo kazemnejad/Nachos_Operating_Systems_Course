@@ -117,7 +117,6 @@ int main(int argc, char **argv)
 			for (int j = 2; j < numPrograms + 2; ++j)
 			{
 				char *an = *(argv + j);
-				printf("'%s'\n", an);
 				StartUserProgram(an);
 			}
 			// printf(*(argv + 2));

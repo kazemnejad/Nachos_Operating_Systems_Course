@@ -25,6 +25,10 @@
 #include "system.h"
 #include "syscall.h"
 
+void HandleForkSyscall();
+void HandleKhiariForkSyscall();
+void DoAfterContextSwitchThings();
+
 //----------------------------------------------------------------------
 // ExceptionHandler
 // 	Entry point into the Nachos kernel.  Called when a user program
@@ -62,9 +66,18 @@ void ExceptionHandler(ExceptionType which)
             break;
 
         case SC_Exit:
-            printf("exit: %s\n", currentThread->getName());
+            printf("\n# EXIT #: %s\n", currentThread->getName());
+            printf("# Exit(arg = %d) #\n", machine->ReadRegister(4));
             currentThread->Finish();
-            machine->IncrementPCReg();
+            break;
+
+        case SC_Fork:
+            printf("kir\n");
+            // HandleForkSyscall();x
+            // machine->WriteRegister(2, 5);
+            // machine->IncrementPCReg();
+            // HandleKhiariForkSyscall();
+            HandleForkSyscall();
             break;
 
         default:
@@ -73,4 +86,53 @@ void ExceptionHandler(ExceptionType which)
             break;
         }
     }
+}
+
+void RunChildThread(int ignored)
+{
+    // DoContextSwitchThings();
+
+    // return fork result with 0
+    machine->DumpState();
+    machine->WriteRegister(2, 0);
+
+    // increment PC to move from fork syscall
+    // machine->IncrementPCReg();
+
+    machine->Run();
+    ASSERT(FALSE);
+}
+
+void HandleForkSyscall()
+{
+    // force current thread to save its registers
+    machine->IncrementPCReg();
+    currentThread->SaveUserState();
+    machine->DumpState();
+
+    // create new addrSpace using currentThread space (simply copy currentThread memory)
+    AddrSpace *space = new AddrSpace(currentThread->space);
+
+    // now create child thread using currentThread (parent thread)
+    Thread *childThread = new Thread(currentThread);
+    childThread->space = space;
+
+    int childPid = childThread->GetPid();
+
+    // return fork result with child pid
+    machine->WriteRegister(2, childPid + 12);
+    machine->DumpState(childThread->userRegisters);
+
+    // increment PC to move from fork syscall
+    // machine->IncrementPCReg();
+
+    childThread->Fork(RunChildThread, 0);
+}
+
+void HandleKhiariForkSyscall()
+{
+    Thread *childThread = new Thread(currentThread);
+    int newPc = machine->ReadRegister(4);
+    currentThread->space->InitRegisters();
+    machine->OverridePC(newPc);
 }

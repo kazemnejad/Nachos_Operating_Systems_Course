@@ -32,9 +32,9 @@
 //	"threadName" is an arbitrary string, useful for debugging.
 //----------------------------------------------------------------------
 
-Thread::Thread(char *threadName)
+Thread::Thread(char *t)
 {
-    Init(threadName);
+    Init(t);
 }
 
 Thread::Thread(Thread *parent)
@@ -58,6 +58,10 @@ void Thread::Init(char *threadName)
 #ifdef USER_PROGRAM
     space = NULL;
     pid = (machine != NULL) ? machine->GetNewPid() : 0;
+
+    char *t = new char[200];
+    sprintf(t, "%d: %s", pid, name);
+    name = t;
 #endif
 }
 
@@ -83,7 +87,8 @@ void Thread::InitUserRegisters(int *sourceRegisters)
 
 Thread::~Thread()
 {
-    printf("d:%s\n", getName());
+    printf("# DELETE #: %s\n", getName());
+
     DEBUG('t', "Deleting thread \"%s\"\n", name);
 
     ASSERT(this != currentThread);
@@ -172,7 +177,6 @@ void Thread::CheckOverflow()
 //
 void Thread::Finish()
 {
-    printf("finish: %s\n", getName());
     (void)interrupt->SetLevel(IntOff);
     ASSERT(this == currentThread);
 
