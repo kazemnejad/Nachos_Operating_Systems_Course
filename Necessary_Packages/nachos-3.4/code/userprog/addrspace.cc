@@ -66,8 +66,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
     unsigned int i, size;
 
     executable->ReadAt((char *)&noffH, sizeof(noffH), 0);
-    if ((noffH.noffMagic != NOFFMAGIC) &&
-        (WordToHost(noffH.noffMagic) == NOFFMAGIC))
+    if ((noffH.noffMagic != NOFFMAGIC) && (WordToHost(noffH.noffMagic) == NOFFMAGIC))
         SwapHeader(&noffH);
     ASSERT(noffH.noffMagic == NOFFMAGIC);
 
@@ -109,6 +108,39 @@ AddrSpace::AddrSpace(OpenFile *executable)
     CopySegmentToMemory(noffH.initData, executable);
 }
 
+AddrSpace::AddrSpace(AddrSpace *space)
+{
+    numPages = space->numPages;
+    pageTable = new TranslationEntry[numPages];
+    for (int i = 0; i < numPages; i++)
+    {
+        pageTable[i].virtualPage = i; // for now, virtual page # = phys page #
+
+        int pgNumber = machine->GetFreePhysicalPageNumber();
+        ASSERT(pgNumber != -1);
+        pageTable[i].physicalPage = pgNumber;
+
+        pageTable[i].valid = TRUE;
+        pageTable[i].use = FALSE;
+        pageTable[i].dirty = FALSE;
+        pageTable[i].readOnly = FALSE;
+    }
+
+    CleanAddrSpace();
+    CopyAddrSpace(space);
+}
+
+void AddrSpace::CopyAddrSpace(AddrSpace *space)
+{
+    for (int i = 0; i < space->numPages; ++i)
+    {
+        char *src = &machine->mainMemory[space->pageTable[i].physicalPage * PageSize];
+        char *dst = &machine->mainMemory[pageTable[i].physicalPage * PageSize];
+
+        memcpy(dst, src, PageSize);
+    }
+}
+
 void AddrSpace::CopySegmentToMemory(Segment seg, OpenFile *file)
 {
     if (seg.size <= 0)
@@ -134,7 +166,7 @@ void AddrSpace::CopySegmentToMemory(Segment seg, OpenFile *file)
     file->ReadAt(&(machine->mainMemory[physicalAddr]), seg.size - i * PageSize, seg.inFileAddr + i * PageSize);
 }
 
-void AddrSpace::CleanAddrspace()
+void AddrSpace::CleanAddrSpace()
 {
     for (int i = 0; i < numPages; ++i)
     {

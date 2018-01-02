@@ -25,6 +25,8 @@ class AddrSpace
 	AddrSpace(OpenFile *executable); // Create an address space,
 									 // initializing it with the program
 									 // stored in the file "executable"
+	AddrSpace(AddrSpace *space);
+	void CopyAddrSpace(AddrSpace *space);
 
 	~AddrSpace(); // De-allocate an address space
 
@@ -35,7 +37,7 @@ class AddrSpace
 	void RestoreState(); // info on a context switch
 
 	void PrintPageTable();
-	void CleanAddrspace();
+	void CleanAddrSpace();
 	void CopySegmentToMemory(Segment s, OpenFile *file);
 	void DumpAddrSpace();
 
