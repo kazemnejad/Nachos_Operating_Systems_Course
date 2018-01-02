@@ -94,6 +94,9 @@ class Thread
 
     // basic thread operations
 
+    Thread(Thread *parent);
+    void Init();
+
     void Fork(VoidFunctionPtr func, int arg); // Make thread run (*func)(arg)
     void Yield();                             // Relinquish the CPU if any
         // other thread is runnable
@@ -105,6 +108,10 @@ class Thread
         // overflowed its stack
     void setStatus(ThreadStatus st) { status = st; }
     char *getName() { return (name); }
+    int GetPid() { return pid }
+
+    void InitUserRegisters(int *sourceRegisters);
+
     void Print() { printf("%s, ", name); }
 
   private:
@@ -115,6 +122,8 @@ class Thread
                          // (If NULL, don't deallocate stack)
     ThreadStatus status; // ready, running or blocked
     char *name;
+    int pid = -1;
+    int parentPid = -1;
 
     void StackAllocate(VoidFunctionPtr func, int arg);
     // Allocate a stack for thread.
