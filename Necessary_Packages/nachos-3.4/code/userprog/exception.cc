@@ -72,7 +72,7 @@ void ExceptionHandler(ExceptionType which)
             break;
 
         case SC_Fork:
-            printf("kir\n");
+            printf("\n# FORK #: %s\n", currentThread->getName());
             // HandleForkSyscall();x
             // machine->WriteRegister(2, 5);
             // machine->IncrementPCReg();
@@ -90,14 +90,13 @@ void ExceptionHandler(ExceptionType which)
 
 void RunChildThread(int ignored)
 {
-    // DoContextSwitchThings();
+    DoAfterContextSwitchThings();
 
     // return fork result with 0
-    machine->DumpState();
     machine->WriteRegister(2, 0);
 
     // increment PC to move from fork syscall
-    // machine->IncrementPCReg();
+    machine->IncrementPCReg();
 
     machine->Run();
     ASSERT(FALSE);
@@ -106,9 +105,7 @@ void RunChildThread(int ignored)
 void HandleForkSyscall()
 {
     // force current thread to save its registers
-    machine->IncrementPCReg();
     currentThread->SaveUserState();
-    machine->DumpState();
 
     // create new addrSpace using currentThread space (simply copy currentThread memory)
     AddrSpace *space = new AddrSpace(currentThread->space);
@@ -120,11 +117,10 @@ void HandleForkSyscall()
     int childPid = childThread->GetPid();
 
     // return fork result with child pid
-    machine->WriteRegister(2, childPid + 12);
-    machine->DumpState(childThread->userRegisters);
+    machine->WriteRegister(2, childPid);
 
     // increment PC to move from fork syscall
-    // machine->IncrementPCReg();
+    machine->IncrementPCReg();
 
     childThread->Fork(RunChildThread, 0);
 }
