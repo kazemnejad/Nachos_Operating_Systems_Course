@@ -39,7 +39,7 @@ Thread::Thread(char *threadName)
 
 Thread::Thread(Thread *parent)
 {
-    char threadName[200];
+    char *threadName = new char[200];
     sprintf(threadName, "%s child", parent->getName());
     Init(threadName);
 
@@ -57,7 +57,7 @@ void Thread::Init(char *threadName)
     status = JUST_CREATED;
 #ifdef USER_PROGRAM
     space = NULL;
-    pid = machine->GetNewPid();
+    pid = (machine != NULL) ? machine->GetNewPid() : 0;
 #endif
 }
 

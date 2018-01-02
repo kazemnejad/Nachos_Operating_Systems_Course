@@ -250,7 +250,7 @@ class Machine
 	void InitFreePhysicalPages();
 
 	Stack *freePhysicalPages;
-	int lastPid = 0;
+	int lastPid = 1;
 };
 
 extern void ExceptionHandler(ExceptionType which);
