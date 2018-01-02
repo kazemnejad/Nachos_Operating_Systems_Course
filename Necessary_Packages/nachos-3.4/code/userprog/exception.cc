@@ -28,6 +28,7 @@
 void HandleForkSyscall();
 void HandleKhiariForkSyscall();
 void DoAfterContextSwitchThings();
+void HandleJoinSyscall();
 
 //----------------------------------------------------------------------
 // ExceptionHandler
@@ -76,6 +77,12 @@ void ExceptionHandler(ExceptionType which)
             HandleForkSyscall();
             break;
 
+        case SC_Join:
+            printf("\n# JOIN #: %s\n", currentThread->getName());
+            printf("# JOIN(pid = %d) #\n", machine->ReadRegister(4));
+            HandleJoinSyscall();
+            break;
+
         default:
             printf("Unexpected user mode exception %d %d\n", which, type);
             ASSERT(FALSE);
@@ -121,10 +128,24 @@ void HandleForkSyscall()
     childThread->Fork(RunChildThread, 0);
 }
 
-void HandleKhiariForkSyscall()
+bool IsTargetRunning(int targetId)
 {
-    Thread *childThread = new Thread(currentThread);
-    int newPc = machine->ReadRegister(4);
-    currentThread->space->InitRegisters();
-    machine->OverridePC(newPc);
+    List *threads = scheduler->readyList;
+    for (ListElement *ptr = threads->first; ptr != NULL; ptr = ptr->next)
+    {
+        Thread *t = (Thread *)ptr->item;
+        if (t->GetPid() == targetId)
+            return true;
+    }
+
+    return false;
+}
+
+void HandleJoinSyscall()
+{
+    int targetId = machine->ReadRegister(4);
+    while (IsTargetRunning(targetId))
+        currentThread->Yield();
+
+    machine->IncrementPCReg();
 }
