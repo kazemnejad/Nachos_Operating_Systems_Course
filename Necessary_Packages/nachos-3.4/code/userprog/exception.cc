@@ -73,10 +73,6 @@ void ExceptionHandler(ExceptionType which)
 
         case SC_Fork:
             printf("\n# FORK #: %s\n", currentThread->getName());
-            // HandleForkSyscall();x
-            // machine->WriteRegister(2, 5);
-            // machine->IncrementPCReg();
-            // HandleKhiariForkSyscall();
             HandleForkSyscall();
             break;
 

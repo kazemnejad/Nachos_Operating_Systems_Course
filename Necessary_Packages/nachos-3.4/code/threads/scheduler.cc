@@ -119,34 +119,6 @@ void Scheduler::Run(Thread *nextThread)
 
     DEBUG('t', "Now in thread \"%s\"\n", currentThread->getName());
 
-    // If the old thread gave up the processor because it was finishing,
-    // we need to delete its carcass.  Note we cannot delete the thread
-    // before now (for example, in Thread::Finish()), because up to this
-    // point, we were still running on the old thread's stack!
-
-    // fprintf(stderr, "running: %s\n", currentThread->getName());
-
-    // if (threadToBeDestroyed != NULL)
-    // {
-    //     delete threadToBeDestroyed;
-    //     threadToBeDestroyed = NULL;
-    // }
-
-    //     while (!threadToBeDestroyed->IsEmpty())
-    //     {
-    //         Thread *t = (Thread *)threadToBeDestroyed->Remove();
-    //         delete t;
-    //     }
-
-    //     printf("skkkkkkkkkk\n");
-    // #ifdef USER_PROGRAM
-    //     if (currentThread->space != NULL)
-    //     {                                      // if there is an address space
-    //         currentThread->RestoreUserState(); // to restore, do it.
-    //         currentThread->space->RestoreState();
-    //     }
-    // #endif
-
     DoAfterContextSwitchThings();
 }
 

@@ -11,14 +11,6 @@
 
 int A[10]; /* size of physical memory; with code, we'll run out of space!*/
 
-void an()
-{
-    int i = 10;
-    i++;
-    Exit(10);
-    return;
-}
-
 int main()
 {
     int i, j, tmp;
@@ -27,10 +19,12 @@ int main()
     for (i = 0; i < 10; i++)
         A[i] = 10 - i;
 
-    int an = Fork();
-    Exit(an);
-
-    // Fork(an);
+    int pid = Fork();
+    if (pid == 0) {
+        Exit(10);
+    } else {
+        Exit(pid);
+    }
 
     /* then sort! */
     for (i = 0; i < 9; i++)
