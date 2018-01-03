@@ -110,6 +110,9 @@ class Thread
     char *getName() { return (name); }
     int GetPid() { return pid; }
 
+    int GetParentPid() { return parentPid; }
+    void SetParentPid(int id) { parentPid = id; }
+
     void InitUserRegisters(int *sourceRegisters);
 
     void Print() { printf("%s, ", name); }

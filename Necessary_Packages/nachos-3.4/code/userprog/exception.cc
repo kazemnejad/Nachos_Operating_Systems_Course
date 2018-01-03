@@ -29,6 +29,8 @@ void HandleForkSyscall();
 void HandleKhiariForkSyscall();
 void DoAfterContextSwitchThings();
 void HandleJoinSyscall();
+void HandleExecSyscall();
+char *readString(int addr, int len);
 
 //----------------------------------------------------------------------
 // ExceptionHandler
@@ -83,6 +85,11 @@ void ExceptionHandler(ExceptionType which)
             HandleJoinSyscall();
             break;
 
+        case SC_Exec:
+            printf("\n# EXEC #: %s\n", currentThread->getName());
+            HandleExecSyscall();
+            break;
+
         default:
             printf("Unexpected user mode exception %d %d\n", which, type);
             ASSERT(FALSE);
@@ -125,6 +132,7 @@ void HandleForkSyscall()
     // increment PC to move from fork syscall
     machine->IncrementPCReg();
 
+    // add child to scheduler readylist (we'll run it in future)
     childThread->Fork(RunChildThread, 0);
 }
 
@@ -148,4 +156,68 @@ void HandleJoinSyscall()
         currentThread->Yield();
 
     machine->IncrementPCReg();
+}
+
+char *readString(int addr, int len)
+{
+    char *dst = new char[len + 1];
+    for (int i = 0; i < len; ++i)
+    {
+        int value;
+        machine->ReadMem(addr + i, 1, &value);
+        dst[i] = (char)value;
+    }
+
+    dst[len] = 0;
+
+    return dst;
+}
+
+void HandleExecSyscall()
+{
+    // get filename from Exec(name, size)
+    int filenameAddr = machine->ReadRegister(4);
+    int len = machine->ReadRegister(5);
+    char *filename = readString(filenameAddr, len);
+    printf("# Exec(filename = %s)\n", filename);
+
+    // try to read program executable file
+    OpenFile *executable = fileSystem->Open(filename);
+
+    // check if we find the file or not;
+    if (executable == NULL)
+    {
+        printf("# Unable to open file %s\n", filename);
+
+        // return 0 as pid to Exec syscall
+        machine->WriteRegister(2, 0);
+
+        // incremenet pc register
+        machine->IncrementPCReg();
+
+        return;
+    }
+
+    // create addrSpace using the executable file (simply load file into memory and create pagetable)
+    AddrSpace *space = new AddrSpace(executable);
+
+    // create raw thread
+    Thread *t = new Thread(filename);
+    t->space = space;
+    t->space->InitRegisters(t->userRegisters);
+    t->SetParentPid(currentThread->GetPid());
+
+    printf("# Created new process with pid = %d #\n", t->GetPid());
+
+    // close file
+    delete executable;
+
+    // return created process id to Exec syscall
+    machine->WriteRegister(2, t->GetPid());
+
+    // incremenet pc register
+    machine->IncrementPCReg();
+
+    // add new program to scheduler readylist
+    t->Fork(RunUserProgramProcess, 0);
 }
